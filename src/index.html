@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and OTP Authentication</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            animation: backgroundAnimation 10s linear infinite;
+        }
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .container h1, .container h2 {
+            margin-bottom: 30px;
+            color: #333;
+            animation: slideIn 0.5s ease-in-out;
+        }
+        .container button {
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .container button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .container input {
+            padding: 12px;
+            margin: 20px 0;
+            width: calc(100% - 24px);
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .container .message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .container .validation-message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .container .validation-message.success {
+            color: #28a745;
+        }
+        .container .validation-message.error {
+            color: #dc3545;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            animation: fadeIn 0.5s;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 12px;
+            text-align: center;
+            animation: zoomIn 0.6s;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .block-details {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .transfer-container {
+            display: none;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .transfer-container h2 {
+            margin-bottom: 30px;
+            color: #333;
+            animation: slideIn 0.5s ease-in-out;
+        }
+        .transfer-container input {
+            padding: 12px;
+            margin: 20px 0;
+            width: calc(100% - 24px);
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .transfer-container select {
+            padding: 12px;
+            margin: 20px 0;
+            width: calc(100% - 24px);
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .transfer-container button {
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .transfer-container button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .currency-symbol {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            pointer-events: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale3d(0.1, 0.1, 0.1);
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="loginContainer">
+        <h1>Login</h1>
+        <input type="text" id="loginId" placeholder="Login ID">
+        <input type="password" id="password" placeholder="Password">
+        <button id="loginBtn">Login</button>
+        <div class="message" id="loginMessage"></div>
+    </div>
+
+    <div class="transfer-container" id="transferContainer" style="display: none;">
+        <h2>Transfer Funds</h2>
+        <input type="text" id="fromAccount" placeholder="From Account">
+        <input type="text" id="toAccount" placeholder="To Account">
+        <div style="position: relative;">
+            <span class="currency-symbol" id="currencySymbol">₹</span>
+            <input type="number" id="amount" placeholder="Amount" style="padding-left: 30px;">
+        </div>
+        <select id="currency" style="margin-top: 20px;">
+            <option value="INR">INR</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+        </select>
+        <button id="transferBtn">Transfer</button>
+        <div class="message" id="transferMessage"></div>
+    </div>
+
+    <div class="container" id="otpContainer" style="display: none;">
+        <h1>OTP Authentication</h1>
+        <button id="generateOtpBtn">Generate OTP</button>
+        <div class="message" id="otpMessage"></div>
+        <div id="otpInputContainer" style="display: none;">
+            <input type="text" id="otpInput" placeholder="Enter OTP">
+            <button id="validateOtpBtn">Validate OTP</button>
+        </div>
+        <div class="validation-message" id="validationMessage"></div>
+    </div>
+
+    <div class="container" id="blockDetailsContainer" style="display: none;">
+        <h1>Block Details</h1>
+        <div class="block-details" id="blockDetails"></div>
+        <button id="getBlockDetailsBtn">Get Latest Block Details</button>
+    </div>
+
+    <!-- The Modal -->
+    <div id="validationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modalMessage"></p>
+        </div>
+    </div>
+
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
