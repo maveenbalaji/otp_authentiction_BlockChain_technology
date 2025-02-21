@@ -108,13 +108,25 @@ The frontend includes the following files:
 - **CORS**: Cross-Origin Resource Sharing, a security feature implemented by web browsers to control which resources can be accessed from different origins.
 - **ABI (Application Binary Interface)**: A JSON representation of the smart contract's methods and events, allowing interaction with the smart contract.
 ## 9.User Interface:
-**ADMIN PAGE**
+
+
+**ADMIN PAGE**:
+
+
 ![WhatsApp Image 2025-02-21 at 12 02 57_fdd4d5d2](https://github.com/user-attachments/assets/0ec926b2-833d-4c5f-8558-014d14da0bb7)
-**Fund Transfer Page**
+
+**Fund Transfer Page**:
+
 ![WhatsApp Image 2025-02-21 at 12 02 57_13e1e779](https://github.com/user-attachments/assets/5e9680ce-d900-4b4c-b10c-48e902441498)
+
+
 **OTP Authentication Page**
+
 ![WhatsApp Image 2025-02-21 at 12 02 58_7da708fd](https://github.com/user-attachments/assets/bff7d3e5-c87c-4593-8262-6ba74d871738)
+
 **Block deatils**
+
 ![WhatsApp Image 2025-02-21 at 12 02 59_b51ea694](https://github.com/user-attachments/assets/2f65f696-d085-4216-88b4-780b0368c289)
+
 
 This `README.md` provides a comprehensive overview of the project, including the purpose of each file, installation steps, and technical terms. If you encounter any issues or need further assistance, feel free to ask!
